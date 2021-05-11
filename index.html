@@ -926,8 +926,8 @@ public class MainActivity extends AppCompatActivity {
 <h4 class="panel-title">Mutation Operator</h4>
 </div>
 <div class="panel-body">
-<a href="#demo14" class="list-group-item" data-toggle="collapse">DataLeakOperator<span class="badge alert-success">AST</span></a>
-<div id="demo14" class="panel collapse">
+<a href="#dataleakoperator" class="list-group-item" data-toggle="collapse">DataLeakOperator<span class="badge alert-success">AST</span></a>
+<div id="dataleakoperator" class="panel collapse">
 <div class="panel-body">
 <p>
 <h4>Description:</h4> Injects data leak variable declarations, sources, sinks, hops, and transformations at locations marked by a given mutation scheme. For example, the simple data leak used in our experiments used this replacement strategy:
@@ -1115,6 +1115,7 @@ class Example {
 </p>
 </div>
 </div>
+
 <a href="#scheme_complex_path" class="list-group-item" data-toggle="collapse">Complex-Path<span class="badge alert-success">AST</span></a>
 <div id="scheme_complex_path" class="panel collapse">
 <div class="panel-body">
@@ -1174,11 +1175,66 @@ class Example {
 </p>
 </div>
 </div>
+
+
+<a href="#scope_based" class="list-group-item" data-toggle="collapse">Scope based<span class="badge alert-success">AST</span></a>
+<div id="scope_based" class="panel collapse">
+<div class="panel-body">
+<p>
+<h4>Description:</h4>
+Inject code by analyzing scopes based on visibility. As
+application developers may arbitrarily organize class scopes, seeding mutants into applications
+using this scheme generally results in interesting and often complicated mutant placement, which
+further assists in stress-testing security techniques that assume an adversarial threat model (e.g.,
+data leak detectors).
+</p>
+<p>
+<h4>Detection Technique:</h4> <span class="label alert-success">AST</span>
+</p>
+<p>
+<h4>Code Example:</h4>
+<h5>Before</h5><pre class="prettyprint linenums:5">
+public class ParentClass {
+String dataLeak = "";
+     int methodA () {
+     return 1;
+    }
+    class ChildClass {
+        int childMethodA () {
+        return 1;
+        }
+    }
+}
+</pre>
+<h5>After</h5><pre class="prettyprint linenums:5">
+public class ParentClass {
+// Declaration Mark 0
+String dataLeak = "";
+    int methodA () {
+    // Sink Mark 0-1
+    android.util.Log.d("leak-0-1", dataLeak);
+    return 1;
+    }
+    class ChildClass {
+        int childMethodA () {
+        // Source Mark 0
+        dataLeak = java.util.Calendar.getInstance().getTimeZone().getDisplayName();
+        // Sink Mark 0-0
+        android.util.Log.d("leak-0-0", dataLeak);
+        return 1; }
+    }
+}
+</pre>
+</p>
 </div>
 </div>
 
 
-        </main>
+</div>
+</div>
+
+
+</main>
 <hr>
 <main class="container" role="main" id="data">
             <p>&nbsp</p>
