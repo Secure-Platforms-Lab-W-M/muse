@@ -569,7 +569,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         <p>
         <h4>Description:</h4> Fragment declared within an Activity class requires its click event listening methods to be
         defined in the Activity class. When we placed source in such click event listening method
-        and the sink in an Activity method callable by, Argus missed the leak.
+        and the sink in an Activity method callable by, A tool may miss the leak.
         </p>
     <p>
     <h4>Code Example:</h4>
@@ -596,7 +596,7 @@ public class MainActivity extends AppCompatActivity {
     <div class="panel-body">
         <p>
         <h4>Description:</h4>In similar construction of FragmentEventToExternalMethod, when source and sink are distributed across click event
-        listener methods connected to Fragment GUI components, Argus missed the leak.
+        listener methods connected to Fragment GUI components, A tool may miss the leak.
         </p>
     <p>
     <h4>Code Example:</h4>
@@ -633,7 +633,7 @@ public class MainActivity extends AppCompatActivity {
         <p>
         <h4>Description:</h4> Android Activity lifecycle method onCreate can be used to create a source for leak. If it
         is then leaked through a method called by a fragment component click event listening
-        method, it is undetected by Argus.
+        method, it may be undetected by a tool.
         </p>
     <p>
     <h4>Code Example:</h4>
@@ -673,9 +673,9 @@ public class MainActivity extends AppCompatActivity {
     <div class="panel-body">
         <p>
         <h4>Description:</h4> When sink and source are placed in an event listener method defined in an Activity class
-        are coupled with components in a Fragment through relevant XML resource file, Argus
-        misses the leak. In similar construction to F14, if both source and sink are placed in event
-        listener methods for fragment components, Argus does not report it.
+        are coupled with components in a Fragment through relevant XML resource file, a tool may
+        miss the leak. In similar construction to FragmentEventToExternalMethod, if both source and sink are placed in event
+        listener methods for fragment components, a tool may not report it.
         </p>
     <p>
     <h4>Code Example:</h4>
@@ -699,7 +699,7 @@ public class MainActivity extends AppCompatActivity {
 <div id="demo18" class="panel collapse">
     <div class="panel-body">
         <p>
-        <h4>Description:</h4> A RecyclerView.ViewHolder abstract class is used to describe each item within a RecyclerView. This is required to be extended when used inside the extending class of RecyclerView.Adapter. When leak source and sink are placed within the scope of the class implementing the RecyclerView.ViewHolder, Argus is unable to detect it.
+        <h4>Description:</h4> A RecyclerView.ViewHolder abstract class is used to describe each item within a RecyclerView. This is required to be extended when used inside the extending class of RecyclerView.Adapter. When leak source and sink are placed within the scope of the class implementing the RecyclerView.ViewHolder, a tool may be unable to detect it.
         </p>
     <p>
     <h4>Code Example:</h4>
@@ -721,7 +721,7 @@ public class ListEntityAdapter extends RecyclerView.Adapter<ListEntityAdapter.Li
 <div id="demo19" class="panel collapse">
     <div class="panel-body">
         <p>
-        <h4>Description:</h4>  This flaw is similar to RecyclerViewHolder, but where the leak source and sink are placed within the constructor of the class extending RecyclerView.ViewHolder. Argus is unable to detect the
+        <h4>Description:</h4>  This flaw is similar to RecyclerViewHolder, but where the leak source and sink are placed within the constructor of the class extending RecyclerView.ViewHolder. A tool may be unable to detect the
         placed leak in this scenario.
         </p>
     <p>
@@ -743,7 +743,7 @@ public class ListViewHolder extends RecyclerView.ViewHolder {
 <div id="demo20" class="panel collapse">
     <div class="panel-body">
         <p>
-        <h4>Description:</h4> The class extending RecyclerView.Adapter implements the abstract method OnCreateViewHolder, when ViewHolder needs to represent an item. If a leak is placed within OnCreateViewHolder, Argus's analysis can't detect it.
+        <h4>Description:</h4> The class extending RecyclerView.Adapter implements the abstract method OnCreateViewHolder, when ViewHolder needs to represent an item. If a leak is placed within OnCreateViewHolder, a tool's analysis may not detect it.
         </p>
     <p>
     <h4>Code Example:</h4>
@@ -769,7 +769,7 @@ public class ListEntityAdapter extends RecyclerView.Adapter<ListEntityAdapter.Li
     <div class="panel-body">
         <p>
         <h4>Description:</h4>  Similar to RecyclerCreateViewHolder, the class extending RecyclerView.Adapter implements the abstract method onBindViewHolder, when ViewHolder needs to display the data
-        at the specified position. If a leak is placed within onBindViewHolder, Argus's analysis cannot detect it.
+        at the specified position. If a leak is placed within onBindViewHolder, a tool's analysis may not detect it.
         </p>
     <p>
     <h4>Code Example:</h4>
@@ -795,7 +795,7 @@ public class ListEntityAdapter extends RecyclerView.Adapter<ListEntityAdapter.Li
 <div id="demo22" class="panel collapse">
     <div class="panel-body">
         <p>
-        <h4>Description:</h4>getItemCount is an abstract method required to be overridden to return the total number of items bound in RecyclerView. This method is placed within a class extending RecyclerView.Adapter. Argus is unable to find a leak if the source and sink are placed within
+        <h4>Description:</h4>getItemCount is an abstract method required to be overridden to return the total number of items bound in RecyclerView. This method is placed within a class extending RecyclerView.Adapter. A tool may be unable to find a leak if the source and sink are placed within
         getItemCount.
         </p>
     <p>
@@ -821,7 +821,7 @@ public class ListEntityAdapter extends RecyclerView.Adapter<ListEntityAdapter.Li
 
     <div class="panel-body">
         <p>
-        <h4>Description:</h4>HornDroid does not detect a leak if the source is placed in the onCreate method of an
+        <h4>Description:</h4>A tool may not detect a leak if the source is placed in the onCreate method of an
         activity, and the sink is placed in the constructor of the fragment within the activity.
         </p>
     <p>
@@ -855,7 +855,7 @@ public class MainActivity extends AppCompatActivity {
 <div id="demo24" class="panel collapse">
     <div class="panel-body">
         <p>
-        <h4>Description:</h4>HornDroid does not detect a leak if the source is placed in the onCreate method of an
+        <h4>Description:</h4>A tool may not detect a leak if the source is placed in the onCreate method of an
         activity, and the sink is placed in the constructor of the fragment within the activity.
         </p>
     <p>
@@ -882,7 +882,7 @@ public class MainActivity extends AppCompatActivity {
     <div class="panel-body">
         <p>
         <h4>Description:</h4>When the source of the leak is placed at the onCreate method of activity class, and the sink
-        at the onCreateView method of the fragment class, HornDroid does not detect the leak.
+        at the onCreateView method of the fragment class, a tool may not detect the leak.
         </p>
     <p>
     <h4>Code Example:</h4>
