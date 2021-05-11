@@ -525,7 +525,6 @@ public class LeakyFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_leaky, container, false);
     }
 }
-
 public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -553,21 +552,19 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public MySQLiteHelper(Context context) {
         super(context, "example", null, 1);
     }
-
     @Override
     public void onCreate(SQLiteDatabase db) {
         String dataLeak = Calendar.getInstance().getTimeZone().getDisplayName();
         Log.d("leak-1”, dataLeak);
     }
-}
-</pre>
+}</pre>
 </p>
 </div>
 </div>
 
 
 <a href="#demo14" class="list-group-item" data-toggle="collapse">FragmentEventToExternalMethod</a>
-<div id="demo14 class="panel collapse">
+<div id="demo14" class="panel collapse">
     <div class="panel-body">
         <p>
         <h4>Description:</h4> Fragment declared within an Activity class requires its click event listening methods to be
@@ -577,29 +574,61 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     <p>
     <h4>Code Example:</h4>
     <pre class="prettyprint linenums:1">
-</pre>
+public class MainActivity extends AppCompatActivity {
+    private String generateString(){
+        android.util.Log.d("leak-1-0", dataLeAk1);
+    }
+    public void button2Clicked(View view) {
+        dataLeAk1 = java.util.Calendar.getInstance().getTimeZone().getDisplayName();
+        TextView t = findViewById(R.id.textView);
+        t.setText(generateString());
+    }
+    public static class SimpleFragment extends Fragment {
+        //...
+    }
+}</pre>
 </p>
 </div>
 </div>
 
 <a href="#demo15" class="list-group-item" data-toggle="collapse">FragmentCrossClickEventListeners</a>
-<div id="demo15 class="panel collapse">
+<div id="demo15" class="panel collapse">
     <div class="panel-body">
         <p>
-        <h4>Description:</h4>  In similar construction of FragmentEventToExternalMethod, when source and sink are distributed across click event
+        <h4>Description:</h4>In similar construction of FragmentEventToExternalMethod, when source and sink are distributed across click event
         listener methods connected to Fragment GUI components, Argus missed the leak.
         </p>
     <p>
     <h4>Code Example:</h4>
     <pre class="prettyprint linenums:1">
-</pre>
+public class MainActivity extends AppCompatActivity {
+    //...
+    public void button1Clicked(View view) {
+        android.util.Log.d("leak-1-0", dataLeAk1);
+        TextView t = findViewById(R.id.textView);
+        t.setText(generateString());
+    }
+    private String generateString() {
+        String counter = "Counter: " + i;
+        i++;
+        dataLeAk1 = java.util.Calendar.getInstance().getTimeZone().getDisplayName();
+        return counter;
+    }
+    public void button2Clicked(View view) {
+        TextView t = findViewById(R.id.textView);
+        t.setText(generateString());
+    }
+    public static class SimpleFragment extends Fragment {
+        //...
+    }
+}</pre>
 </p>
 </div>
 </div>
 
 
 <a href="#demo16" class="list-group-item" data-toggle="collapse">OnCreateFragmentClickEventListener</a>
-<div id="demo16 class="panel collapse">
+<div id="demo16" class="panel collapse">
     <div class="panel-body">
         <p>
         <h4>Description:</h4> Android Activity lifecycle method onCreate can be used to create a source for leak. If it
@@ -608,14 +637,39 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         </p>
     <p>
     <h4>Code Example:</h4>
-    <pre class="prettyprint linenums:1">
-</pre>
+<pre class="prettyprint linenums:1">
+public class MainActivity extends AppCompatActivity {
+    int i = 0;
+    String dataLeAk1 = "0";
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+    //...
+        habijabi();
+    }
+    private void habijabi(){
+        dataLeAk1 = java.util.Calendar.getInstance().getTimeZone().getDisplayName();
+    }
+    //...
+    private String generateString() {
+        String counter = "Counter: " + i;
+        i++;
+        android.util.Log.d("leak-1-0", dataLeAk1);
+        return counter;
+    }
+    public void button2Clicked(View view) {
+        TextView t = findViewById(R.id.textView);
+        t.setText(generateString());
+    }
+    public static class SimpleFragment extends Fragment {
+    //...
+    }
+}</pre>
 </p>
 </div>
 </div>
 
 <a href="#demo17" class="list-group-item" data-toggle="collapse">FragmentClickEventListener</a>
-<div id="demo17 class="panel collapse">
+<div id="demo17" class="panel collapse">
     <div class="panel-body">
         <p>
         <h4>Description:</h4> When sink and source are placed in an event listener method defined in an Activity class
@@ -626,7 +680,16 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     <p>
     <h4>Code Example:</h4>
     <pre class="prettyprint linenums:1">
-</pre>
+public class MainActivity extends AppCompatActivity {
+    public void button1Clicked(View view) {
+        dataLeAk1 = java.util.Calendar.getInstance().getTimeZone().getDisplayName();
+        android.util.Log.d("leak-1-0", dataLeAk1);
+        //...
+    }
+    public static class SimpleFragment extends Fragment {
+        //...
+    }
+}</pre>
 </p>
 </div>
 </div>
